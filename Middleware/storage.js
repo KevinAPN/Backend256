@@ -1,9 +1,11 @@
 const multer = require("multer");
+const path = require('path');
 
 // Configuración de Multer para almacenar imágenes en './public/uploads'
 const guardar = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, './public/uploads');
+        const uploadPath = path.join(__dirname, '../public/uploads');
+        cb(null, uploadPath);
     },
     filename: (req, file, cb) => {
         if (file !== null) {
@@ -21,7 +23,6 @@ const filtro = (req, file, cb) => {
     } 
 }
 
-// Asegúrate de que el campo aceptado sea 'imagen'
 const subirImagen = multer({ storage: guardar, fileFilter: filtro });
 
 module.exports = subirImagen;
